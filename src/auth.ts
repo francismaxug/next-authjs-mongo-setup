@@ -3,14 +3,12 @@ import GoogleProvider from "next-auth/providers/google"
 import GithhubProvider from "next-auth/providers/github"
 import CredentialsProvider from "next-auth/providers/credentials"
 import bcrypt from "bcryptjs"
-
 import { getUserByEmail } from "./data/users"
 import User from "./models/User"
+import { authConfig } from "./auth.config"
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
-  session: {
-    strategy: "jwt",
-  },
+  ...authConfig,
   providers: [
     CredentialsProvider({
       async authorize(
@@ -32,7 +30,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           if (!isMatchPassword) {
             throw new Error("invalid credentials")
           }
-
+          console.log(user)
           return user
         } catch (error) {
           throw new Error("User not found")

@@ -8,7 +8,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
   console.log(name)
 
   try {
-    ConnectDB()
+    await ConnectDB()
 
     const userExist = await User.findOne({ email })
     if (userExist) {
